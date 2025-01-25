@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Partner;
 use Illuminate\Http\Request;
+use App\Http\Resources\PartnerResource;
+use App\Http\Resources\PartnerCollection;
+
 
 class PartnerController extends Controller
 {
@@ -12,7 +15,8 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        //
+        $partners = Partner::all();
+        return new PartnerCollection($partners);
     }
 
     /**
@@ -36,7 +40,7 @@ class PartnerController extends Controller
      */
     public function show(Partner $partner)
     {
-        //
+        return new PartnerResource($partner);
     }
 
     /**
