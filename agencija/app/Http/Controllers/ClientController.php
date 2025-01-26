@@ -72,13 +72,9 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Client $client)
     {
-        $client = Client::find($id);
-        if (!$client) {
-            return response()->json('Client not found', 404); // Ako klijent nije pronađen
-        }
-
+       
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
@@ -87,8 +83,12 @@ class ClientController extends Controller
             'role' => 'required|string'
         ]);
 
-        $client->update($validated); // Ažurira klijenta
-        return response()->json($client); // Vraća ažurirane podatke klijenta
+        $client->update($validated); 
+        return response()->json([
+            'message' => 'Client updated successfully',
+            'client' => $client,
+        ], 200);
+        
     }
 
     /**
