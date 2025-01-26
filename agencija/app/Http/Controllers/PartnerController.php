@@ -71,14 +71,13 @@ class PartnerController extends Controller
      */
     public function update(Request $request, Partner $partner)
     {
-        // Validacija ulaznih podataka
+        
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'contact' => 'nullable|string|max:255',
             'type' => 'nullable|string|max:255',
         ]);
 
-        // Ažuriranje partnera
         $partner->update($validatedData);
 
         return response()->json([
@@ -87,21 +86,6 @@ class PartnerController extends Controller
         ], 200);
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    /*public function destroy($id)
-    {
-        $partner = Partner::find($id);
-
-        if (!$partner) {
-            return response()->json(['error' => 'Partner not found'], 404); 
-        }
-
-        $partner->delete();
-        return response()->json(['message' => 'Partner deleted successfully'], 200);
-    }*/
 
     public function destroy(Partner $partner)
     {

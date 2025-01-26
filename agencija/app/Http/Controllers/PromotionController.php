@@ -12,7 +12,8 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        //
+        $promotions = Promotion::all();
+        return $promotions;
     }
 
     /**
@@ -28,15 +29,32 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validated = $request->validate([
+                
+                'discount' => 'required|numeric',
+              
+            ]);
+    
+            // Kreiranje klijenta
+            $promotion = Promotion::create($validated);
+    
+            return response()->json($promotion, 201);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Error occurred: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Promotion $promotion)
+    public function show($promotion_id)
     {
-        //
+        $promotion = Promotion::find($promotion_id);
+        if (is_null($promotion)){
+            return response()->json('Data not found', 404);
+        }
+        return response()->json($promotion);     
     }
 
     /**
@@ -52,7 +70,20 @@ class PromotionController extends Controller
      */
     public function update(Request $request, Promotion $promotion)
     {
-        //
+        $validated = $request->validate([
+            'discount' => 'required|numeric'
+        ]);
+
+        // Ažuriraj podatke
+        $promotion->update($validated);
+
+        // Pozovi fresh() da bi vratio ažurirani objekat
+        $promotion = $promotion->fresh();
+
+        return response()->json([
+            'message' => 'Promotion updated successfully',
+            'promotion' => $promotion,
+        ], 200);
     }
 
     /**
@@ -60,6 +91,11 @@ class PromotionController extends Controller
      */
     public function destroy(Promotion $promotion)
     {
-        //
+        if (!$promotion) {
+            return response()->json(['error' => 'Promotion not found'], 404); 
+        }
+
+        $promotion->delete();
+        return response()->json(['message' => 'Promotion deleted successfully'], 200);
     }
 }

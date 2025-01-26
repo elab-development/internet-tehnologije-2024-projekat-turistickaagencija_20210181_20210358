@@ -95,10 +95,8 @@ class ClientController extends Controller
      * Remove the specified resource from storage.
      */
 
-    public function destroy($id)
+    public function destroy(Client $client)
     {
-
-        $client = Client::find($id);
 
         if (!$client) {
             return response()->json(['error' => 'Client not found'], 404); 

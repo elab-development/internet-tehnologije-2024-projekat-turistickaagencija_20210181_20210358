@@ -9,6 +9,7 @@ class Reservation extends Model
 {
     /** @use HasFactory<\Database\Factories\ReservationFactory> */
     use HasFactory;
+    protected $fillable = ['arrangement_id', 'client_id', 'status', 'date'];
     public function arrangement()
     {
         return $this->belongsTo(Arrangement::class);
