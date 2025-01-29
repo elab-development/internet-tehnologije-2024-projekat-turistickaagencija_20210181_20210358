@@ -10,15 +10,32 @@ class ReservationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    /*public function index()
     {
         $reservations = Reservation::all();
         return $reservations;
-    }
+    }/*
+    
 
     /**
      * Show the form for creating a new resource.
      */
+
+    public function index(Request $request)
+    {
+        // Ako je prosleđen client_id, filtriraj rezervacije po njemu
+        $query = Reservation::query();
+
+        if ($request->has('client_id')) {
+            $query->where('client_id', $request->client_id);
+        }
+
+        // Vraćanje filtriranih rezultata
+        $reservations = $query->get();
+
+        return response()->json($reservations);
+    }
+    
     public function create()
     {
         //

@@ -68,3 +68,24 @@ Route::post('/reservation/store', [ReservationController::class, 'store']);
 
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    // Profil korisnika
+    Route::get('/profil', function(Request $request) {
+        return auth()->user();
+    });
+
+    // Aranžmani - dozvoljene operacije su kreiranje, ažuriranje i brisanje
+    Route::resource('arrangement', ArrangementController::class)->only(['store', 'update', 'destroy']);
+
+    // Rezervacije - korisnik može praviti rezervacije i brisati ih
+    Route::resource('reservation', ReservationController::class)->only(['store', 'destroy']);
+
+    // API ruta za odjavu korisnika
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    // Filtriranje rezervacija po ID korisnika
+    Route::get('/reservation', [ReservationController::class, 'index']); // Dodaj query parametar client_id za filtriranje
+});
