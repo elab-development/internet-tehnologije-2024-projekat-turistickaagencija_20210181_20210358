@@ -49,6 +49,8 @@ Route::get('/arrangement/{id}', [ArrangementController::class, 'show']);
 Route::patch('/arrangement/update/{arrangement}', [ArrangementController::class, 'update']);
 Route::delete('/arrangement/destroy/{arrangement}', [ArrangementController::class, 'destroy']);
 Route::post('/arrangement/store', [ArrangementController::class, 'store']);
+Route::get('/arrangements/filter', [ArrangementController::class, 'filteredIndex']);
+
 
 #promotion-routes
 
@@ -114,3 +116,5 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
     Route::resource('arrangement', ArrangementController::class)->only(['index','show','store','update','destroy']);
     Route::resource('destination', DestinationController::class)->only(['index','show','store','update','destroy']);
 });
+
+

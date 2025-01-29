@@ -16,6 +16,39 @@ class ArrangementController extends Controller
         return $arrangements;
     }
 
+    public function filteredIndex(Request $request)
+{
+    $query = Arrangement::query();
+
+    // Filtriranje po minimalnoj i maksimalnoj ceni
+    if ($request->has('price_min')) {
+        $query->where('price', '>=', $request->price_min);
+    }
+
+    if ($request->has('price_max')) {
+        $query->where('price', '<=', $request->price_max);
+    }
+
+    // Filtriranje po nazivu destinacije
+    if ($request->has('name')) {
+        $query->where('name', 'like', '%' . $request->name . '%');
+    }
+
+    // Sortiranje po ceni
+    if ($request->has('sort')) {
+        if ($request->sort == 'price_asc') {
+            $query->orderBy('price', 'asc');
+        } elseif ($request->sort == 'price_desc') {
+            $query->orderBy('price', 'desc');
+        }
+    }
+
+    // Paginacija (10 aranžmana po stranici)
+    $arrangements = $query->paginate(10);
+
+    return response()->json($arrangements);
+}
+
     /**
      * Show the form for creating a new resource.
      */
