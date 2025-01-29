@@ -25,4 +25,7 @@ class Client extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    
+    
 }

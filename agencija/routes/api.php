@@ -12,10 +12,13 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Resources\PartnerResources;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Models\Client;
+use App\Http\Middleware;
+
 
 Route::get('/client', function (Request $request) {
     return $request->client();
 })->middleware('auth:sanctum');
+
 
 #client-routes
 
@@ -80,12 +83,34 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // Rezervacije - korisnik može praviti rezervacije i brisati ih
     Route::resource('reservation', ReservationController::class)->only(['store', 'destroy']);
-
-    // API ruta za odjavu korisnika
-    Route::post('/logout', [AuthController::class, 'logout']);
+    
 });
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    // Filtriranje rezervacija po ID korisnika
-    Route::get('/reservation', [ReservationController::class, 'index']); // Dodaj query parametar client_id za filtriranje
+// Rute koje su dostupne samo ulogovanim korisnicima
+Route::group(['middleware' => ['auth:sanctum', 'role:user']], function () {
+    Route::resource('reservation', ReservationController::class)->only(['index','show','store']);
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        // Filtriranje rezervacija po ID korisnika
+        Route::get('/reservation', [ReservationController::class, 'index']); // Dodaj query parametar client_id za filtriranje
+    });
+});
+
+// Rute koje su dostupne samo administratorima
+Route::group(['middleware' => ['auth:sanctum', 'role:agent']], function () {
+    Route::resource('client', ClientController::class)->only(['index','show']);
+    Route::resource('partner', PartnerController::class)->only(['index','show']);
+    Route::resource('reservation', ReservationController::class)->only(['index','show','store','update','destroy']);
+    Route::resource('promotion', PromotionController::class)->only(['index','show','store','update','destroy']);
+    Route::resource('arrangement', ArrangementController::class)->only(['index','show','store','update','destroy']);
+    Route::resource('destination', DestinationController::class)->only(['index','show']);
+});
+
+// Rute koje su dostupne samo agentima
+Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
+    Route::resource('client', ClientController::class)->only(['index','show','store','update','destroy']);
+    Route::resource('partner', PartnerController::class)->only(['index','show','store','update','destroy']);
+    Route::resource('reservation', ReservationController::class)->only(['index','show','store','update','destroy']);
+    Route::resource('promotion', PromotionController::class)->only(['index','show','store','update','destroy']);
+    Route::resource('arrangement', ArrangementController::class)->only(['index','show','store','update','destroy']);
+    Route::resource('destination', DestinationController::class)->only(['index','show','store','update','destroy']);
 });
