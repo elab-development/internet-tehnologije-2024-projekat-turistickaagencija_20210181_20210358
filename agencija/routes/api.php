@@ -9,12 +9,12 @@ use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\ArrangementController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ReservationController;
-
 use App\Http\Resources\PartnerResources;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Models\Client;
 
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/client', function (Request $request) {
+    return $request->client();
 })->middleware('auth:sanctum');
 
 #client-routes
@@ -64,3 +64,7 @@ Route::delete('/reservation/destroy/{reservation}', [ReservationController::clas
 Route::post('/reservation/store', [ReservationController::class, 'store']);
 
 
+#auth-routes
+
+Route::post('/register',[AuthController::class,'register']);
+Route::post('/login', [AuthController::class, 'login']);

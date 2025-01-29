@@ -35,7 +35,7 @@ class ClientController extends Controller
                 'surname' => 'required|string|max:255',
                 'email' => 'required|email|unique:clients,email',
                 'password' => 'required|string|min:8',
-                'role' => 'required|string'
+                'role' => 'string'
             ]);
     
             // Kreiranje klijenta
