@@ -13,6 +13,8 @@ class ClientSeeder extends Seeder
      */
     public function run(): void
     {
-        Client::factory(15)->create();
+        Client::factory()->count(15)->create([
+            'role' => 'user', // Postavi automatski 'user' u svakom unosu
+        ]);
     }
 }

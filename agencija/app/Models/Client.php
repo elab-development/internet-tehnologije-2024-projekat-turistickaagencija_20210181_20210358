@@ -12,7 +12,7 @@ class Client extends Authenticatable
     /** @use HasFactory<\Database\Factories\ClientFactory> */
     use HasApiTokens, HasFactory;
     protected $fillable = [
-        'name', 'surname', 'email', 'password', 'role'
+        'name', 'surname', 'email', 'password'  
     ];
     protected $hidden = [
         'password',
@@ -25,7 +25,4 @@ class Client extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    
-    
 }
