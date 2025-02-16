@@ -38,13 +38,25 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'clients',
+            'provider' => 'users',
         ],
+
         'api' => [
-        'driver' => 'sanctum',
-        'provider' => 'clients',
-    ],
-    ],
+            'driver' => 'token',
+            'provider' => 'users',
+        ],
+
+        'admin-api' => [
+            'driver' => 'sanctum',
+            'provider' => 'admins',
+        ],
+
+        'agent-api' => [
+            'driver' => 'sanctum',
+            'provider' => 'agents',
+        ],
+],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -64,16 +76,22 @@ return [
     */
 
     'providers' => [
-        'clients' => [
+        'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Client::class),
+            'model' => App\Models\Client::class,  // Korisnici - Client model
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,  // Administratori - Admin model
+        ],
+
+        'agents' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Agent::class,  // Agenti - Agent model
+        ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------

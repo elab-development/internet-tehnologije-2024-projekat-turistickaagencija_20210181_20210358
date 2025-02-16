@@ -10,23 +10,27 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up()
-    {
-    Schema::create('clients', function (Blueprint $table) {
+{
+    Schema::create('admins', function (Blueprint $table) {
         $table->id();
         $table->string('name');
         $table->string('surname');
         $table->string('email')->unique();
+        $table->timestamp('email_verified_at')->nullable();
         $table->string('password');
         $table->string('role', 50)->default('user');  // 50 je dovoljna dužina za 'user', 'admin', 'agent'
+    
+        $table->rememberToken();
         $table->timestamps();
     });
-    }
+}
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('admins');
     }
 };
