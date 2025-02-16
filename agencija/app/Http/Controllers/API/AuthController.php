@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Admin;
+use App\Models\Agent;
+
 
 class AuthController extends Controller
 {
@@ -52,6 +55,33 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Hi ' . $client->name . ', welcome back!', 'access_token' => $token, 'token_type' => 'Bearer',]);
     }
+
+    public function loginAdmin(Request $request)
+    {
+        $admin = Admin::where('email', $request->email)->first();
+
+        if (!$admin || !Hash::check($request->password, $admin->password)) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $token = $admin->createToken('admin-token')->plainTextToken;
+
+        return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
+    }
+
+    public function loginAgent(Request $request)
+    {
+        $agent = Agent::where('email', $request->email)->first();
+
+        if (!$agent || !Hash::check($request->password, $agent->password)) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $token = $agent->createToken('agent-token')->plainTextToken;
+
+        return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
+    }
+
 
     public function logout(){
         auth()->user()->tokens->each(function ($token) {

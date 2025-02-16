@@ -28,11 +28,12 @@ class RoleMiddleware
        if (in_array($user->role, $roles)) {
            return $next($request); // Prolazi dalje u request
        }
+        // Ako korisnik ima odgovarajuću ulogu
+        if (in_array($user->role, $roles)) { // Ovde koristiš 'role' umesto 'uloga'
+            return $next($request); // Dozvoljava pristup sa odgovarajućom ulogom
+        }
 
-       // Ako korisnik nema odgovarajuću ulogu
-       return response()->json(['message' => 'Forbidden'], 403);
-
-
- 
+        // Ako korisnik nema odgovarajuću ulogu
+        return response()->json(['message' => 'Forbidden'], 403)
     }
 }
