@@ -30,7 +30,7 @@ class ClientFactory extends Factory
             'surname' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'password' => bcrypt('password'),
-            'role' => $this->faker->randomElement(['client', 'admin','agent']),
+            'role' => 'user',
         ];
     }
 }
