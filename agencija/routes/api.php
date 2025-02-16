@@ -10,12 +10,17 @@ use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Resources\PartnerResources;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Models\Client;
-use App\Http\Middleware;
+use App\Http\Client;
+use App\Http\Middleware\RoleMiddleware; 
 
 Route::get('/client', function (Request $request) {
     return $request->client();
 })->middleware('auth:sanctum');
+
+/*protected $routeMiddleware = [
+    // Ostali middleware
+    'role' => \App\Http\Middleware\RoleMiddleware::class,  // Dodaj ovo
+];*/
 
 /**
  * =============================
@@ -57,33 +62,25 @@ Route::group(['middleware' => ['auth:sanctum', 'role:user']], function () {
     Route::get('/reservation/{id}', [ReservationController::class, 'show']);
 });
 
-/**
- * =====================================
- *   4. RUTE ZA AGENTE (ROLE: AGENT)
- * =====================================
- */
+// Ove rute su dostupne korisnicima sa rokom 'agent'
 Route::group(['middleware' => ['auth:sanctum', 'role:agent']], function () {
-    Route::resource('client', ClientController::class)->only(['index', 'show']);
-    Route::resource('partner', PartnerController::class)->only(['index', 'show']);
-    Route::resource('reservation', ReservationController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    Route::resource('promotion', PromotionController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    Route::resource('arrangement', ArrangementController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    Route::resource('destination', DestinationController::class)->only(['index', 'show']);
+    Route::resource('client', ClientController::class)->only(['index', 'show']);  // Pregled klijenata
+    Route::resource('partner', PartnerController::class)->only(['index', 'show']); // Pregled partnera
+    Route::resource('reservation', ReservationController::class)->only(['index', 'show']);  // Pregled rezervacija
 });
 
-/**
- * =====================================
- *   5. RUTE ZA ADMINISTRATORE (ROLE: ADMIN)
- * =====================================
- */
+
+// RUTE ZA ADMINISTRATORE (sa role middleware)
+// Ove rute su dostupne samo korisnicima sa rokom 'admin'
 Route::group(['middleware' => ['auth:sanctum', 'role:admin']], function () {
-    Route::resource('client', ClientController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    Route::resource('partner', PartnerController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    Route::resource('reservation', ReservationController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    Route::resource('promotion', PromotionController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    Route::resource('arrangement', ArrangementController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    Route::resource('destination', DestinationController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::resource('client', ClientController::class)->only(['index', 'show', 'store', 'update', 'destroy']);  // Admin može dodati, ažurirati i obrisati klijente
+    Route::resource('partner', PartnerController::class)->only(['index', 'show', 'store', 'update', 'destroy']); // Admin može dodati, ažurirati i obrisati partnere
+    Route::resource('reservation', ReservationController::class)->only(['index', 'show', 'store', 'update', 'destroy']);  // Admin može dodati, ažurirati i obrisati rezervacije
+    Route::resource('promotion', PromotionController::class)->only([ 'store', 'update', 'destroy']);  // Admin može dodati, ažurirati i obrisati promocije
+    Route::resource('arrangement', ArrangementController::class)->only(['store', 'update', 'destroy']);  // Admin može dodati, ažurirati i obrisati aranžmane
+    Route::resource('destination', DestinationController::class)->only(['store', 'update', 'destroy']);  // Admin može dodati, ažurirati i obrisati destinacije
 });
+
 
 /**
  * =============================

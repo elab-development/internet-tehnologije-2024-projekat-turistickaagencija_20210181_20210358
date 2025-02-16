@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
@@ -15,22 +16,23 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$roles)
     {
-        $user = Auth::user();
+       // Dohvati trenutno ulogovanog korisnika
+       $user = Auth::user();
 
-        // Ako korisnik nije ulogovan, tretiraj ga kao guest
-        if (!$user) {
-            if (in_array('guest', $roles)) {
-                return $next($request); // Dozvoljava pristup neulogovanim korisnicima
-            }
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
+       // Ako korisnik nije ulogovan
+       if (!$user) {
+           return response()->json(['message' => 'Unauthorized'], 401);
+       }
 
-        // Ako korisnik ima odgovarajuću ulogu
-        if (in_array($user->uloga, $roles)) {
-            return $next($request); // Dozvoljava pristup sa odgovarajućom ulogom
-        }
+       // Ako korisnik ima odgovarajuću ulogu
+       if (in_array($user->role, $roles)) {
+           return $next($request); // Prolazi dalje u request
+       }
 
-        // Ako korisnik nema odgovarajuću ulogu
-        return response()->json(['message' => 'Forbidden'], 403);
+       // Ako korisnik nema odgovarajuću ulogu
+       return response()->json(['message' => 'Forbidden'], 403);
+
+
+ 
     }
 }
