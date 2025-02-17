@@ -15,25 +15,21 @@ class RoleMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next, ...$roles)
-    {
-       // Dohvati trenutno ulogovanog korisnika
-       $user = Auth::user();
+    {  // Provodimo autentifikaciju sa odgovarajućim guard-om za 'user' (client)
+        $user = Auth::guard('api')->user(); // Ensure you use the correct guard (e.g., 'api')
 
-       // Ako korisnik nije ulogovan
-       if (!$user) {
-           return response()->json(['message' => 'Unauthorized'], 401);
-       }
-
-       // Ako korisnik ima odgovarajuću ulogu
-       if (in_array($user->role, $roles)) {
-           return $next($request); // Prolazi dalje u request
-       }
-        // Ako korisnik ima odgovarajuću ulogu
-        if (in_array($user->role, $roles)) { // Ovde koristiš 'role' umesto 'uloga'
-            return $next($request); // Dozvoljava pristup sa odgovarajućom ulogom
+        // If the user is not authenticated
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        // Ako korisnik nema odgovarajuću ulogu
+        // Check if the user's role is 'user'
+        if ($user->role === 'user') {
+            return $next($request); // Allow the request to proceed
+        }
+
+        // If the user does not have the 'user' role
         return response()->json(['message' => 'Forbidden'], 403);
+    
     }
 }

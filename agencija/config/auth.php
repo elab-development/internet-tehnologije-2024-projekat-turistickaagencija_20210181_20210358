@@ -37,7 +37,7 @@ return [
     'providers' => [
         'clients' => [ // Ispravljeno: umesto 'users' sada je 'clients'
             'driver' => 'eloquent',
-            'model' => App\Models\Client::class, // Korisnici - Client model
+            'model' => env('AUTH_MODEL', App\Models\Client::class) // Korisnici - Client model
         ],
 
         'admins' => [
