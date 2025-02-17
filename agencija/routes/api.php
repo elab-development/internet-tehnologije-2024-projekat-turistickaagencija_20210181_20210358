@@ -12,6 +12,7 @@ use App\Http\Resources\PartnerResources;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Middleware\RoleMiddleware; 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 Route::get('/client', function (Request $request) {
     return $request->client();
@@ -37,12 +38,15 @@ Route::post('/login/admin', [AuthController::class, 'loginAdmin']);
 Route::post('/login/agent', [AuthController::class, 'loginAgent']);
 
 
+
 //rute koje zahtevaju autentifikaciju
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/profile', function (Request $request) {
         return auth()->user();
     })->name('profile'); // ✅ Imenovana ruta
+
+    Route::post('/password/reset', [ResetPasswordController::class, 'resetPassword']);
 
 });
 
