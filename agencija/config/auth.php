@@ -14,7 +14,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'sanctum', // Ispravljeno: Laravel koristi Sanctum za API
+            'driver' => 'sanctum', 
             'provider' => 'clients',
         ],
 
@@ -25,7 +25,7 @@ return [
 
         'admin' => [
             'driver' => 'sanctum',
-            'provider' => 'admins',  // Dodaj ovu liniju za admin autentifikaciju
+            'provider' => 'admins',  
         ],
 
         'agent-api' => [
@@ -35,19 +35,19 @@ return [
     ],
 
     'providers' => [
-        'clients' => [ // Ispravljeno: umesto 'users' sada je 'clients'
+        'clients' => [ 
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Client::class) // Korisnici - Client model
+            'model' => env('AUTH_MODEL', App\Models\Client::class)
         ],
 
         'admins' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Admin::class), // Administratori - Admin model
+            'model' => env('AUTH_MODEL', App\Models\Admin::class),
         ],
 
         'agents' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Agent::class), // Agenti - Agent model
+            'model' => env('AUTH_MODEL', App\Models\Agent::class), 
         ],
     ],
 

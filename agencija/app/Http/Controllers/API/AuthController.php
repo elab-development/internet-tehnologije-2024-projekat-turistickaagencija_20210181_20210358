@@ -37,8 +37,7 @@ class AuthController extends Controller
 
         $token = $client->createToken('auth_token')->plainTextToken;
 
-        return response()
-		->json(['data' => $client, 'access_token' => $token, 'token_type' => 'Bearer',]);
+        return response()->json(['data' => $client, 'access_token' => $token, 'token_type' => 'Bearer',]);
     }
 
 
@@ -68,7 +67,7 @@ class AuthController extends Controller
 
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }
-    
+
     /*public function loginAdmin(Request $request)
 {
     // Validacija inputa

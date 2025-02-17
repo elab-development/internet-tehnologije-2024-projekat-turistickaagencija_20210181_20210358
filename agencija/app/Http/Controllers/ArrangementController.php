@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Arrangement;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class ArrangementController extends Controller
 {
@@ -97,12 +99,9 @@ class ArrangementController extends Controller
      */
     public function edit(Arrangement $arrangement)
     {
-        //
+       
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Arrangement $arrangement)
     {
         $validated = $request->validate([
@@ -124,10 +123,6 @@ class ArrangementController extends Controller
         ], 200);
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Arrangement $arrangement)
     {
         if (!$arrangement) {
@@ -136,5 +131,17 @@ class ArrangementController extends Controller
 
         $arrangement->delete();
         return response()->json(['message' => 'Arrangement deleted successfully'], 200);
+    }
+
+    public function exportArrangementsToPDF()
+    {
+        $arrangements = Arrangement::all();
+
+        try {
+            $pdf = PDF::loadView('pdf.arrangements', compact('arrangements'));
+            return $pdf->download('arrangements_list.pdf');
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 }
