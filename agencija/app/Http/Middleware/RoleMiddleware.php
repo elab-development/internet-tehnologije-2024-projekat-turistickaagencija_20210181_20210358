@@ -34,6 +34,6 @@ class RoleMiddleware
         }
 
         // Ako korisnik nema odgovarajuću ulogu
-        return response()->json(['message' => 'Forbidden'], 403)
+        return response()->json(['message' => 'Forbidden'], 403);
     }
 }
