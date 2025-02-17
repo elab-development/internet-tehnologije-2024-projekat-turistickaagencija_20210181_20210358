@@ -25,7 +25,7 @@ class PromotionFactory extends Factory
         $model = Promotion::class;
 
         return [
-            'discount' => $this->faker->randomFloat(2, 5, 50), // Discount between 5 and 50
+            'discount' => $this->faker->randomFloat(2, 5, 50), //popust izmedju 2 i 50
         ];
     }
 }

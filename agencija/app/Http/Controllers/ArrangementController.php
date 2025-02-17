@@ -9,9 +9,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class ArrangementController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $arrangements = Arrangement::all();
@@ -51,17 +48,11 @@ class ArrangementController extends Controller
     return response()->json($arrangements);
 }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         try {
@@ -72,7 +63,7 @@ class ArrangementController extends Controller
                 'description' => 'required|string'
             ]);
     
-            // Kreiranje klijenta
+           
             $arrangement = Arrangement::create($validated);
     
             return response()->json($arrangement, 201);
@@ -81,9 +72,6 @@ class ArrangementController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($arrangement_id)
     {
         $arrangement = Arrangement::find($arrangement_id);
@@ -94,9 +82,7 @@ class ArrangementController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Arrangement $arrangement)
     {
        
@@ -111,10 +97,9 @@ class ArrangementController extends Controller
             'description' => 'required|string'
         ]);
 
-        // Ažuriraj podatke
+       
         $arrangement->update($validated);
 
-        // Pozovi fresh() da bi vratio ažurirani objekat
         $arrangement = $arrangement->fresh();
 
         return response()->json([

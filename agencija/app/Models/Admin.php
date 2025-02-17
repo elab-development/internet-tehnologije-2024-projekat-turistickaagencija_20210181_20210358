@@ -12,11 +12,11 @@ class Admin extends Authenticatable
     use HasApiTokens, HasFactory;
 
     protected $fillable = [
-        'name', 'surname', 'email', 'password', // polja koja mogu biti popunjena
+        'name', 'surname', 'email', 'password', 
     ];
 
     protected $hidden = [
-        'password', // Sakrivanje lozinke
+        'password', 
         'remember_token',
     ];
 
@@ -24,7 +24,7 @@ class Admin extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed', // Korišćenje hashiranja lozinke
+            'password' => 'hashed', 
         ];
     }
 }

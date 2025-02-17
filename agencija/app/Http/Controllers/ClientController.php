@@ -7,26 +7,20 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   
     public function index()
     {
         $clients = Client::all();
         return $clients;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+   
     public function create()
     {
         
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {
         try {
@@ -38,7 +32,7 @@ class ClientController extends Controller
                 'role' => 'string'
             ]);
     
-            // Kreiranje klijenta
+            
             $client = Client::create($validated);
     
             return response()->json($client, 201);
@@ -48,9 +42,7 @@ class ClientController extends Controller
     
     }
 
-    /**
-     * Display the specified resource.
-     */
+    
     public function show($client_id)
     {
         $client = Client::find($client_id);
@@ -61,17 +53,13 @@ class ClientController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
     public function edit(Client $client)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, Client $client)
     {
        
@@ -91,9 +79,6 @@ class ClientController extends Controller
         
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
 
     public function destroy(Client $client)
     {
