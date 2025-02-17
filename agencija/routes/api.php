@@ -10,12 +10,17 @@ use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Resources\PartnerResources;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Models\Client;
-use App\Http\Middleware;
+use App\Http\Middleware\RoleMiddleware; 
+use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/client', function (Request $request) {
     return $request->client();
 })->middleware('auth:sanctum');
+
+/*protected $routeMiddleware = [
+    // Ostali middleware
+    'role' => \App\Http\Middleware\RoleMiddleware::class,  // Dodaj ovo
+];*/
 
 /**
  * =============================
@@ -34,6 +39,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/login/admin', [AuthController::class, 'loginAdmin']);
 Route::post('/login/agent', [AuthController::class, 'loginAgent']);
+//Route::middleware('auth:sanctum')->post('/login/admin', [AuthController::class, 'loginAdmin']);
 
 /**
  * =====================================
@@ -59,17 +65,14 @@ Route::group(['middleware' => ['auth:sanctum', 'role:user']], function () {
     Route::get('/reservation/{id}', [ReservationController::class, 'show']);
 });
 
-/**
- * =====================================
- *   4. RUTE ZA AGENTE (ROLE: AGENT)
- * =====================================
- */
+// Ove rute su dostupne korisnicima sa rokom 'agent'
 Route::group(['middleware' => ['auth:sanctum', 'role:agent']], function () {
     Route::resource('client', ClientController::class)->only(['index', 'show']);
     Route::resource('partner', PartnerController::class)->only(['index', 'show']);
     Route::resource('reservation', ReservationController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    Route::resource('promotion', PromotionController::class)->only(['store', 'update', 'destroy']);
-    Route::resource('arrangement', ArrangementController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('promotion', PromotionController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::resource('arrangement', ArrangementController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::resource('destination', DestinationController::class)->only(['index', 'show']);
 });
 
 /**
@@ -81,30 +84,19 @@ Route::group(['middleware' => ['auth:sanctum', 'role:agent']], function () {
     Route::resource('client', ClientController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
     Route::resource('partner', PartnerController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
     Route::resource('reservation', ReservationController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    Route::resource('promotion', PromotionController::class)->only(['store', 'update', 'destroy']);
-    Route::resource('arrangement', ArrangementController::class)->only(['store', 'update', 'destroy']);
-    Route::resource('destination', DestinationController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('promotion', PromotionController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::resource('arrangement', ArrangementController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::resource('destination', DestinationController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
 });*/
-
 Route::prefix('admin')->middleware(['auth:sanctum', 'admin-api'])->group(function () {
-    // Klijent rute
     Route::resource('client', ClientController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    
-    // Partner rute
     Route::resource('partner', PartnerController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    
-    // Rezervacija rute
     Route::resource('reservation', ReservationController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
-    
-    // Promocija rute
-    Route::resource('promotion', PromotionController::class)->only(['store', 'update', 'destroy']);
-    
-    // Aranžman rute
-    Route::resource('arrangement', ArrangementController::class)->only(['store', 'update', 'destroy']);
-    
-    // Odredište rute
-    Route::resource('destination', DestinationController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('promotion', PromotionController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::resource('arrangement', ArrangementController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::resource('destination', DestinationController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
 });
+
 
 
 /**

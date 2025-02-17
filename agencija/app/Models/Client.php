@@ -25,4 +25,9 @@ class Client extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function hasRole($role)
+    {
+    return $this->role === $role;
+    }
 }
