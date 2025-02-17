@@ -28,6 +28,8 @@ Route::get('/arrangement/{id}', [ArrangementController::class, 'show']);
 Route::get('/arrangements/filter', [ArrangementController::class, 'filteredIndex']);
 Route::get('/promotion', [PromotionController::class, 'index']);
 Route::get('/promotion/{id}', [PromotionController::class, 'show']);
+Route::get('/arrangements/export', [ArrangementController::class, 'exportArrangementsToPDF']);
+
 
 
 //autentifikacija
@@ -53,10 +55,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 //rute za registrovane korisnike (role='user')
 
-/*Route::prefix('user')->middleware(['auth:sanctum', 'user'])->group(function () {
-    Route::post('/reservation/store', [ReservationController::class, 'store']);
-});
-*/
 Route::middleware(['auth:sanctum'])->post('/user/reservation/store', [ReservationController::class, 'store']);
 
 
