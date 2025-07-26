@@ -23,8 +23,8 @@ class AgentFactory extends Factory
             'name' => $this->faker->firstName,
             'surname' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
-            'password' => bcrypt('password'),  // Bcryptovana lozinka
-            'role' => 'agent',  // Postavljamo rolu kao agent
+            'password' => bcrypt('password'),  
+            'role' => 'agent', 
         ];
     }
 }

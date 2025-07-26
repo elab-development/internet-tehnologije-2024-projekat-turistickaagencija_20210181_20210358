@@ -68,7 +68,6 @@ class AuthController extends Controller
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }
 
-    
     public function loginAgent(Request $request)
     {
         $agent = Agent::where('email', $request->email)->first();

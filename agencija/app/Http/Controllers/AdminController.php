@@ -7,18 +7,12 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the admins.
-     */
     public function index()
     {
         $admins = Admin::all();
         return response()->json($admins);
     }
 
-    /**
-     * Store a newly created admin in storage.
-     */
     public function store(Request $request)
     {
         try {
@@ -27,10 +21,9 @@ class AdminController extends Controller
                 'surname' => 'required|string|max:255',
                 'email' => 'required|email|unique:admins,email',
                 'password' => 'required|string|min:8',
-                'role' => 'required|string', // role for admin (might be 'admin' in this case)
+                'role' => 'required|string', 
             ]);
     
-            // Create admin
             $admin = Admin::create($validated);
     
             return response()->json($admin, 201);
@@ -39,9 +32,6 @@ class AdminController extends Controller
         }
     }
 
-    /**
-     * Display the specified admin.
-     */
     public function show($admin_id)
     {
         $admin = Admin::find($admin_id);
@@ -51,9 +41,6 @@ class AdminController extends Controller
         return response()->json($admin);
     }
 
-    /**
-     * Update the specified admin in storage.
-     */
     public function update(Request $request, Admin $admin)
     {
         $validated = $request->validate([
@@ -71,9 +58,6 @@ class AdminController extends Controller
         ], 200);
     }
 
-    /**
-     * Remove the specified admin from storage.
-     */
     public function destroy(Admin $admin)
     {
         if (!$admin) {

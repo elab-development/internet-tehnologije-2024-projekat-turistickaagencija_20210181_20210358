@@ -12,8 +12,7 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $user = Auth::guard('admin-api')->user(); // Koristi odgovarajući guard
-
+        $user = Auth::guard('admin-api')->user();
         if (!$user || $user->role !== 'admin') {
             return response()->json(['message' => 'Access Denied. Only admins are allowed.'], 403);
         }
