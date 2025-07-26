@@ -68,64 +68,19 @@ class AuthController extends Controller
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }
 
-    /*public function loginAdmin(Request $request)
-{
-    // Validacija inputa
-    $validator = Validator::make($request->all(), [
-        'email' => 'required|email',
-        'password' => 'required|string',
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 422);
-    }
-
-    // Provera admina u bazi
-    $admin = Admin::where('email', $request->email)->first();
-
-    if (!$admin || !Hash::check($request->password, $admin->password)) {
-        return response()->json(['message' => 'Unauthorized'], 401);
-    }
-
-    // Briše stare tokene kako bi se izbegli duplikati
-    $admin->tokens()->delete();
-
-    // Generisanje tokena koristeći odgovarajući guard
-    $token = $admin->createToken('admin-token', ['admin'])->plainTextToken;
-
-    return response()->json([
-        'access_token' => $token,
-        'token_type' => 'Bearer',
-        'user' => [
-            'id' => $admin->id,
-            'name' => $admin->name,
-            'email' => $admin->email,
-            'role' => 'admin',
-        ]
-    ]);
-}*/
-
-    public function logoutAdmin(Request $request)
-    {
-        $request->user()->tokens()->delete();
-
-        return response()->json(['message' => 'Logged out successfully']);
-    }
-
-
+    
     public function loginAgent(Request $request)
     {
         $agent = Agent::where('email', $request->email)->first();
-
+    
         if (!$agent || !Hash::check($request->password, $agent->password)) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
-
+    
         $token = $agent->createToken('agent-token')->plainTextToken;
-
+    
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }
-
 
     public function logout(){
         auth()->user()->tokens->each(function ($token) {
