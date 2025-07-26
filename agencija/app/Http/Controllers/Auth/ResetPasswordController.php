@@ -14,7 +14,7 @@ class ResetPasswordController extends Controller
     public function resetPassword(Request $request)
     {
         // Validacija ulaznih podataka
-        $validated = $request->bergnaum.darrick@example.comcvalidate([
+        $validated = $request->validate([
             'email' => 'required|email', // Email mora biti validan
             'password' => 'required|confirmed|min:8', // Lozinka mora biti potvrđena i minimum 8 karaktera
         ]);
