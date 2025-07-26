@@ -4,7 +4,7 @@ return [
 
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => 'clients', // Ispravljeno: sada koristi 'clients' umesto 'users'
+        'passwords' => 'clients',
     ],
 
     'guards' => [
