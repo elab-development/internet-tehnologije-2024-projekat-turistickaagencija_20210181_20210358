@@ -17,7 +17,7 @@ return new class extends Migration
         $table->string('surname');
         $table->string('email')->unique();
         $table->string('password');
-        $table->string('role', 50)->default('user');  // 50 je dovoljna dužina za 'user', 'admin', 'agent'
+        $table->string('role', 50)->default('user'); 
         $table->timestamps();
     });
     }
