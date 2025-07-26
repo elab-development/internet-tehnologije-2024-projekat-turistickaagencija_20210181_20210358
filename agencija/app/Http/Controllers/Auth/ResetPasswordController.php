@@ -13,10 +13,10 @@ class ResetPasswordController extends Controller
 
     public function resetPassword(Request $request)
     {
-
         $validated = $request->validate([
             'email' => 'required|email', 
             'password' => 'required|confirmed|min:8', 
+
         ]);
 
         //da li je korisnik autentifikovan putem tokena

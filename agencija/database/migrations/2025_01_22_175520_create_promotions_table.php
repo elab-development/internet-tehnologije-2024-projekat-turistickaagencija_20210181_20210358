@@ -13,7 +13,7 @@ return new class extends Migration
 {
     Schema::create('promotions', function (Blueprint $table) {
         $table->id();
-        $table->decimal('discount', 5, 2); // Npr. 10.5 za 10.5% popusta
+        $table->decimal('discount', 5, 2);
         $table->timestamps();
     });
 }

@@ -24,7 +24,8 @@ class Admin extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed', 
+            'password' => 'hashed',
+
         ];
     }
 }

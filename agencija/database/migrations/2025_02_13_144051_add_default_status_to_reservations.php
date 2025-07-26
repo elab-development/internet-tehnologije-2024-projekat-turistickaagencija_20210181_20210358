@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->string('status')->change(); // Skida default, ali ne briše kolonu
+            $table->string('status')->change(); 
         });
     }
 };

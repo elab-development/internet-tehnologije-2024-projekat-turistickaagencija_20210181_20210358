@@ -46,10 +46,10 @@ Route::post('/login/agent', [AuthController::class, 'loginAgent']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/profile', function (Request $request) {
         return auth()->user();
-    })->name('profile'); // ✅ Imenovana ruta
+    })->name('profile'); //  Imenovana ruta
 
     Route::post('/password/reset', [ResetPasswordController::class, 'resetPassword']);
-
+    Route::post('/logout', [AuthController::class, 'logout']); 
 });
 
 

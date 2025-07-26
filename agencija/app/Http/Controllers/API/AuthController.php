@@ -68,28 +68,18 @@ class AuthController extends Controller
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }
 
-
-    public function logoutAdmin(Request $request)
-    {
-        $request->user()->tokens()->delete();
-
-        return response()->json(['message' => 'Logged out successfully']);
-    }
-
-
     public function loginAgent(Request $request)
     {
         $agent = Agent::where('email', $request->email)->first();
-
+    
         if (!$agent || !Hash::check($request->password, $agent->password)) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
-
+    
         $token = $agent->createToken('agent-token')->plainTextToken;
-
+    
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
     }
-
 
     public function logout(){
         auth()->user()->tokens->each(function ($token) {
