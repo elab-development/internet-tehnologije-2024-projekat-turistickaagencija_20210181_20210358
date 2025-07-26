@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         Partner::query()->delete();
         Destination::query()->delete();
 
-        // Dodajemo Admin i Agent Seedere
+        
         $this->call([
             DestinationSeeder::class,
             PartnerSeeder::class,

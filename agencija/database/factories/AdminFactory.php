@@ -23,8 +23,8 @@ class AdminFactory extends Factory
             'name' => $this->faker->firstName,
             'surname' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
-            'password' => bcrypt('password'),  // Bcryptovana lozinka
-            'role' => 'admin',  // Postavljamo rolu kao admin
+            'password' => bcrypt('password'),  
+            'role' => 'admin',  
         ];
     }
 }
