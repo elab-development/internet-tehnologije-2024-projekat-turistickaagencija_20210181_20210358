@@ -12,11 +12,12 @@ class ArrangementController extends Controller
     public function index()
     {
         $arrangements = Arrangement::all();
-        return $arrangements;
+        return response()->json($arrangements);
+
     }
 
     public function filteredIndex(Request $request)
-{
+    {
     $query = Arrangement::query();
 
     // Filtriranje po minimalnoj i maksimalnoj ceni
@@ -46,7 +47,7 @@ class ArrangementController extends Controller
     $arrangements = $query->paginate(10);
 
     return response()->json($arrangements);
-}
+    }
 
     public function create()
     {
