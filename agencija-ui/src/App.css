@@ -82,3 +82,20 @@ footer {
 .pink {
     color: #d61a94;
 }
+.contact-details {
+    padding: 0;
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.contact-details a {
+    color: #000;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.contact-details svg {
+    margin: 0.5rem 0;
+    font-size: 2rem;
+    color: #d61a94;
+}

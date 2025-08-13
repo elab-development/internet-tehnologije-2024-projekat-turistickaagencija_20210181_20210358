@@ -25,7 +25,7 @@ const NavigationMenu = () => {
                     <Navbar.Brand href="/">Agencija INA <IoIosAirplane /></Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/about">About Us</Nav.Link>
+                        <Nav.Link href="/about">Contact</Nav.Link>
                         <Nav.Link href="/destinations">Destinations</Nav.Link>
                         <Nav.Link href="/arrangements">Arrangements</Nav.Link>
                         <Nav.Link href="/promotions">Promotions</Nav.Link>
