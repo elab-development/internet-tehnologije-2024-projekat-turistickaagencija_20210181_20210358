@@ -4,7 +4,6 @@ import NavigationMenu from "./components/NavigationMenu";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./pages/Home";
 import Promotions from "./pages/Promotions";
-import Destinations from "./pages/Destinations";
 import About from "./pages/About";
 import Administration from "./pages/Administration";
 import Arrangements from "./pages/Arrangements";
@@ -24,7 +23,6 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/promotions" element={<Promotions />} />
-                    <Route path="/destinations" element={<Destinations />} />
                     <Route path="/about" element={<About/>} />
                     <Route path="/administration" element={<Administration/>} />
                     <Route path="/arrangements" element={<Arrangements />} />

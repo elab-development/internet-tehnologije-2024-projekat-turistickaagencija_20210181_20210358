@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Arrangement;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Resources\ArrangementResource;
 
 
 class ArrangementController extends Controller
@@ -12,8 +13,11 @@ class ArrangementController extends Controller
     public function index()
     {
         $arrangements = Arrangement::all();
-        return response()->json($arrangements);
 
+        return response()->json([
+            'arrangements' => ArrangementResource::collection($arrangements),
+            'message' => 'All arrangements retrieved successfully'
+        ], 200);
     }
 
     public function filteredIndex(Request $request)

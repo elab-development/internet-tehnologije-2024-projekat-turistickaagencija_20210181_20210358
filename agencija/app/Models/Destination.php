@@ -11,6 +11,6 @@ class Destination extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name', 'picture_link'
     ];
 }
