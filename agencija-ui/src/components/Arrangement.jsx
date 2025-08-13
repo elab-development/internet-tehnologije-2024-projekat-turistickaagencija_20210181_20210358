@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import {Card} from "react-bootstrap";
 
 const Arrangement = props => {
-    const {pictures, arrangement_name, destination_name, price, description} = props;
+    const {pictures, arrangement_name, destination_name, price, description, discount} = props;
+
+    const discountedPrice = discount ? (price - (price * (discount / 100))).toFixed(2) : price.toFixed(2);
     return (
         <>
             <Card style={{ width: '18rem' }}>
@@ -16,7 +18,7 @@ const Arrangement = props => {
                     </Card.Text>
                     <hr/>
                     <Card.Text>
-                        <strong>Price:</strong> {price} &euro;
+                        <strong>Price:</strong> <del className="total-price">{price} &euro;</del> <span className="pink">{discountedPrice} &euro; </span>
                     </Card.Text>
                 </Card.Body>
             </Card>
@@ -30,6 +32,7 @@ Arrangement.propTypes = {
     destination_name : PropTypes.string.isRequired,
     price : PropTypes.number.isRequired,
     description : PropTypes.string.isRequired,
+    discount: PropTypes.number,
 };
 
 export default Arrangement;
