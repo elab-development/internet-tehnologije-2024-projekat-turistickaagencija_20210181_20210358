@@ -53,15 +53,18 @@ const NavigationMenu = () => {
                             )
                         }
 
-                        {
-                            !token && (
-                                <>
-                                    <Nav.Link href="/login">Login</Nav.Link>
-                                </>
-                            )
-                        }
-
                     </Nav>
+
+                    {
+                        !token && (
+                            <>
+                                <Navbar.Collapse className="justify-content-end">
+                                    <Nav.Link href="/login">Login</Nav.Link>
+                                </Navbar.Collapse>
+
+                            </>
+                        )
+                    }
                 </Container>
             </Navbar>
         </>
