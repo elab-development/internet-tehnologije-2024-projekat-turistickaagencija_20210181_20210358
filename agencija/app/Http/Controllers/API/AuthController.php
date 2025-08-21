@@ -37,7 +37,7 @@ class AuthController extends Controller
 
         $token = $client->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['data' => $client, 'access_token' => $token, 'token_type' => 'Bearer',]);
+        return response()->json(['success'=>true,'data' => $client, 'access_token' => $token, 'token_type' => 'Bearer']);
     }
 
 
@@ -45,14 +45,14 @@ class AuthController extends Controller
     {
         if (!Auth::attempt($request->only('email', 'password'))) 
 	  {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthorized','success'=>false], 401);
         }
 
         $client = Client::where('email', $request['email'])-> firstOrFail();
 
         $token = $client->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['message' => 'Hi ' . $client->name . ', welcome back!', 'access_token' => $token, 'token_type' => 'Bearer',]);
+        return response()->json(['success'=>true,'message' => 'Hi ' . $client->name . ', welcome back!', 'access_token' => $token, 'token_type' => 'Bearer','user'=>$client]);
     }
 
     public function loginAdmin(Request $request)
@@ -60,12 +60,12 @@ class AuthController extends Controller
         $admin = Admin::where('email', $request->email)->first();
 
         if (!$admin || !Hash::check($request->password, $admin->password)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthorized','success'=>false], 401);
         }
 
         $token = $admin->createToken('admin-token')->plainTextToken;
 
-        return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
+        return response()->json(['success'=>true,'access_token' => $token, 'token_type' => 'Bearer','user'=>$admin]);
     }
 
     public function loginAgent(Request $request)
@@ -73,12 +73,12 @@ class AuthController extends Controller
         $agent = Agent::where('email', $request->email)->first();
     
         if (!$agent || !Hash::check($request->password, $agent->password)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthorized','success'=>false], 401);
         }
     
         $token = $agent->createToken('agent-token')->plainTextToken;
     
-        return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
+        return response()->json(['success'=>true,'access_token' => $token, 'token_type' => 'Bearer','user'=>$agent]);
     }
 
     public function logout(){

@@ -99,3 +99,12 @@ footer {
     font-size: 2rem;
     color: #d61a94;
 }
+.button-pink {
+    background-color: #d61a94 !important;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
