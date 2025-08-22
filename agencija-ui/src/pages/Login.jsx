@@ -58,7 +58,7 @@ const Login = () => {
         }).then(response => {
             console.log(response);
             if (response.data.success) {
-                window.sessionStorage.setItem('token', response.data.token);
+                window.sessionStorage.setItem('token', response.data.access_token);
                 window.sessionStorage.setItem('user', JSON.stringify(response.data.user));
                 window.sessionStorage.setItem('role', response.data.user.role);
                 window.location.href = '/';

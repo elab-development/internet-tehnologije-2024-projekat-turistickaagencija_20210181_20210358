@@ -50,6 +50,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/password/reset', [ResetPasswordController::class, 'resetPassword']);
     Route::post('/logout', [AuthController::class, 'logout']); 
+    Route::get('/clients/{clientId}/reservations', [ReservationController::class, 'findArrangementsByClientId']);
+
 });
 
 

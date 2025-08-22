@@ -28,20 +28,24 @@ class ReservationController extends Controller
 
     public function store(Request $request)
     {
-    $validated = $request->validate([
-        'arrangement_id' => 'required|exists:arrangements,id', 
-        'client_id' => 'required|exists:clients,id', 
-        'status' => 'required|string|in:pending,confirmed,canceled', 
-        'date' => 'required|date', 
-    ]);
+        $validated = $request->validate([
+            'arrangement_id' => 'required|exists:arrangements,id',
+            'client_id' => 'required|exists:clients,id'
+        ]);
 
-    $reservation = Reservation::create($validated);
+        $reservation = Reservation::create([
+            'arrangement_id' => $validated['arrangement_id'],
+            'client_id' => $validated['client_id'],
+            'status' => 'pending', // Default status
+            'date' => now(), // Current date as default
+        ]);
 
-  
-    return response()->json([
-        'message' => 'Reservation created successfully',
-        'reservation' => $reservation,
-    ], 201);
+
+        return response()->json([
+            'message' => 'Reservation created successfully',
+            'reservation' => $reservation,
+            'success' => true
+        ], 201);
     }
 
     public function show($reservation_id)
@@ -83,5 +87,16 @@ class ReservationController extends Controller
 
         $reservation->delete();
         return response()->json(['message' => 'Reservation deleted successfully'], 200);
+    }
+
+    public function findArrangementsByClientId($clientId): \Illuminate\Http\JsonResponse
+    {
+        $reservations = Reservation::where('client_id', $clientId)->with('arrangement')->get();
+
+        if ($reservations->isEmpty()) {
+            return response()->json(['message' => 'No reservations found for this client', 'success' => false], 404);
+        }
+
+        return response()->json($reservations);
     }
 }
