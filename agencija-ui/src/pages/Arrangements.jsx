@@ -3,7 +3,7 @@ import Title from "../components/Title";
 import {Row} from "react-bootstrap";
 import axiosInstance from "../communication/axiosInstance";
 import Arrangement from "../components/Arrangement";
-import {ToastContainer} from "react-toastify";
+
 
 const Arrangements = () => {
 
@@ -55,18 +55,7 @@ const Arrangements = () => {
                     )
                 }
             </Row>
-            <ToastContainer
-                position="top-left"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="dark"
-            />
+            
         </>
     );
 };
