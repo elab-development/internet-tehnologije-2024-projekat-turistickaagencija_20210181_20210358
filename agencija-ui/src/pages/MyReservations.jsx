@@ -1,13 +1,16 @@
 import React, {useEffect} from 'react';
 import Title from "../components/Title";
 import axiosInstance from "../communication/axiosInstance";
-import {Table} from "react-bootstrap";
+import {Col, Form, Row, Table} from "react-bootstrap";
 
 const MyReservations = () => {
 
     const token = window.sessionStorage.getItem('token');
     const user = token ? JSON.parse(window.sessionStorage.getItem('user')) : null;
     const [myReservations, setMyReservations] = React.useState([]);
+    const [search, setSearch] = React.useState("");
+    const [images, setImages] = React.useState([]);
+    const [events, setEvents] = React.useState([]);
 
     useEffect(() => {
         if (user) {
@@ -20,6 +23,23 @@ const MyReservations = () => {
             });
         }
     }, []);
+
+    const searchAPI = () => {
+        axiosInstance.get('http://127.0.0.1:8000/api/images?q=' + search).then(response => {
+            setImages(response.data);
+        }).catch(error => {
+            console.error("There was an error searching for images!", error);
+            setImages([]);
+        })
+
+
+        axiosInstance.get('http://127.0.0.1:8000/api/events?q=' + search).then(response => {
+            setEvents(response.data);
+        }).catch(error => {
+            console.error("There was an error searching for events!", error);
+            setEvents([]);
+        })
+    }
 
     return (
         <>
@@ -56,6 +76,58 @@ const MyReservations = () => {
                     </>
                 )
             }
+
+            <Row>
+                <Col md={10} className="mb-4">
+                    <Form.Group className="mb-3" controlId="formSearch">
+                        <Form.Control type="text" onChange={(event) => {
+                            setSearch(event.target.value)
+                        }} name="name" placeholder="Enter name of the city" />
+                    </Form.Group>
+                </Col>
+
+                <Col md={2} className="mb-4">
+                    <button className="button-pink" onClick={searchAPI}>
+                        Search
+                    </button>
+                </Col>
+            </Row>
+
+            <Row>
+                <Col md={6}>
+                    {images.length > 0 && (
+                        <>
+                            {
+                                images.map((image, index) => (
+                                    <div key={index} className="mb-4">
+                                        <img src={image.original} alt={image.title} className="img-fluid" width={image.original_width} height={image.original_height}/>
+                                        <p><a href={image.link} target="_blank" rel="noopener noreferrer">{image.title}</a></p>
+                                    </div>
+                                ))
+                            }
+                        </>
+                    )}
+                </Col>
+
+                <Col md={6}>
+                    {
+                        events.length > 0 && (
+                            <>
+                                {
+                                    events.map((event, index) => (
+                                        <div key={index} className="mb-4">
+                                            <a href={event.link} target="_blank" rel="noopener noreferrer">{event.title}</a>
+                                            <p>{event.snippet}</p>
+                                            <p><strong>Source:</strong> {event.source}</p>
+                                        </div>
+                                    ))
+                                }
+
+                            </>
+                        )
+                    }
+                </Col>
+            </Row>
         </>
     );
 };

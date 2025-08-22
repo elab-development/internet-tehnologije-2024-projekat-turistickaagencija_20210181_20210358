@@ -30,7 +30,8 @@ Route::get('/promotion', [PromotionController::class, 'index']);
 Route::get('/promotion/{id}', [PromotionController::class, 'show']);
 Route::get('/arrangements/export', [ArrangementController::class, 'exportArrangementsToPDF']);
 Route::get('/graphics', [ArrangementController::class, 'groupedByPriceRanges']);
-
+Route::get('/images', [DestinationController::class, 'findGoogleImagesDestinations']);
+Route::get('/events', [DestinationController::class, 'findEventsInDestination']);
 
 //autentifikacija
 
