@@ -1,6 +1,7 @@
 import React from 'react';
 import {Container, Nav, Navbar} from "react-bootstrap";
 import {IoIosAirplane} from "react-icons/io";
+import logo from "../images/logo.png";
 
 const NavigationMenu = () => {
 
@@ -22,7 +23,7 @@ const NavigationMenu = () => {
         <>
             <Navbar bg="light" data-bs-theme="light" className="nav-menu">
                 <Container>
-                    <Navbar.Brand href="/">Agencija INA <IoIosAirplane /></Navbar.Brand>
+                    <Navbar.Brand href="/"><img className="img-fluid" src={logo} alt="Agencija INA" width="100px" height="100px"/></Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/about">Contact</Nav.Link>
@@ -30,7 +31,6 @@ const NavigationMenu = () => {
                         {
                             token && (
                                 <>
-                                    <Nav.Link href="/reservations">Reserve</Nav.Link>
                                     <Nav.Link href="/my-reservations">My reservations</Nav.Link>
                                 </>
                             )
