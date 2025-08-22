@@ -29,7 +29,7 @@ Route::get('/arrangements/filter', [ArrangementController::class, 'filteredIndex
 Route::get('/promotion', [PromotionController::class, 'index']);
 Route::get('/promotion/{id}', [PromotionController::class, 'show']);
 Route::get('/arrangements/export', [ArrangementController::class, 'exportArrangementsToPDF']);
-
+Route::get('/graphics', [ArrangementController::class, 'groupedByPriceRanges']);
 
 
 //autentifikacija
@@ -70,7 +70,6 @@ Route::prefix('agent')->middleware(['auth:sanctum','agent'])->group(function () 
     Route::resource('arrangement', ArrangementController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
     Route::resource('destination', DestinationController::class)->only(['index', 'show']);
 });
-
 
 //rute za registrovane korisnike (role='admin')
 

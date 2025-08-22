@@ -134,4 +134,31 @@ class ArrangementController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+
+    public function groupedByPriceRanges(Request $request)
+    {
+        $ranges = [
+            '0-300' => [0.000, 300],
+            '301-500' => [301, 500],
+            '501-1000' => [501, 1000],
+            '1001+' => [1001, PHP_INT_MAX],
+        ];
+
+        $data = [];
+
+        foreach ($ranges as $label => [$min, $max]) {
+            $count = Arrangement::whereBetween('price', [$min, $max])->count();
+            $data[] = [
+                'price_range' => $label,
+                'count' => $count
+            ];
+        }
+
+        return response()->json([
+            "data" => $data,
+            "message" => "Arrangements grouped by price ranges retrieved successfully",
+            "success" => true
+        ]);
+    }
+
 }
