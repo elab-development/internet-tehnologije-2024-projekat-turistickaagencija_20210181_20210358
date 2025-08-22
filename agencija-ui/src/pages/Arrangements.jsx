@@ -3,7 +3,8 @@ import Title from "../components/Title";
 import {Row} from "react-bootstrap";
 import axiosInstance from "../communication/axiosInstance";
 import Arrangement from "../components/Arrangement";
-
+import {toast, ToastContainer} from "react-toastify";
+import {FaDownload} from "react-icons/fa";
 
 const Arrangements = () => {
 
@@ -26,7 +27,6 @@ const Arrangements = () => {
     useEffect(() => {
             if (user) {
                 axiosInstance.get('/clients/' + user.id +'/reservations').then(response => {
-                    console.log(response);
                     setMyReservations(response.data);
                 }).catch(error => {
                     console.error("There was an error fetching the reservations!", error);
@@ -39,6 +39,36 @@ const Arrangements = () => {
     return (
         <>
             <Title title={"Arrangements"} subtitle="Explore our exclusive arrangements for your next adventure"/>
+
+            <div className="mb-4 text-center">
+                <button className="button-pink" onClick={() => {
+
+                    axiosInstance.get("http://127.0.0.1:8000/api/arrangements/export", {
+                        responseType: "blob", // 👈 Important
+                        headers: {
+                            Accept: "application/pdf", // optional but recommended
+                        },
+                    }).then(
+                        (response) => {
+                            const file = new Blob([response.data], { type: "application/pdf" });
+
+                            const fileURL = URL.createObjectURL(file);
+                            const link = document.createElement("a");
+                            link.href = fileURL;
+                            link.download = "file.pdf"; // filename
+                            link.click();
+
+                            URL.revokeObjectURL(fileURL);
+                            toast.success("Arrangements exported successfully!");
+                        }
+                    ).catch(error => {
+                        console.error("There was an error exporting the arrangements!", error);
+                        toast.error("There was an error exporting the arrangements. Please try again later.");
+                    })
+                }}>
+                    Download all arrangements <FaDownload />
+                </button>
+            </div>
 
             <Row>
                 {
@@ -55,7 +85,6 @@ const Arrangements = () => {
                     )
                 }
             </Row>
-            
         </>
     );
 };
