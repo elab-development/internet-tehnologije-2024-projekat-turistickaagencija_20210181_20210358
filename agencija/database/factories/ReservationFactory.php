@@ -29,7 +29,6 @@ class ReservationFactory extends Factory
             'client_id' => Client::factory(),
             'status' => $this->faker->randomElement(['pending', 'confirmed', 'canceled']),
             'date' => Carbon::now()->format('Y-m-d'),
-            //'date' => $this->faker->date(),
         ];
     }
 }

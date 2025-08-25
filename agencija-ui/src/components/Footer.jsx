@@ -5,7 +5,7 @@ import {IoLogoFacebook, IoLogoInstagram, IoLogoLinkedin, IoLogoYoutube} from "re
 const Footer = () => {
   return (
     <footer>
-      {/* Socijalne ikonice u gornjem delu, desno */}
+      {}
       <Row className="footer-top">
         <Col className="d-flex justify-content-end">
           <ul className="social-icons">
@@ -25,7 +25,7 @@ const Footer = () => {
         </Col>
       </Row>
 
-      {/* Copyright dole, centrirano */}
+      {}
       <Row className="footer-bottom">
         <Col className="text-center">
           <div className="copyright">
