@@ -22,14 +22,26 @@ class ArrangementFactory extends Factory
      */
     public function definition(): array
     {
-        $model = Arrangement::class;
+        // Kreiramo destinaciju
+        $destination = Destination::factory()->create();
+
+        // Generišemo naziv aranžmana u skladu sa destinacijom
+        $arrangementTemplates = [
+            "Explore {destination}",
+            "Romantic getaway to {destination}",
+            "Adventure in {destination}",
+            "Relaxing trip to {destination}",
+            "Cultural tour of {destination}"
+        ];
+
+        $name = str_replace("{destination}", $destination->name, $this->faker->randomElement($arrangementTemplates));
 
         return [
-            'name' => $this->faker->word,
+            'name' => $name,
             'price' => $this->faker->randomFloat(2, 100, 1000),
-            'date' => $this->faker->date(),
-            'description' => $this->faker->paragraph,
-            'destination_id' => Destination::factory(),
+            'date' => $this->faker->dateTimeBetween('2025-09-01', '2026-12-31')->format('Y-m-d'),
+            'description' => 'Join us on an unforgettable journey and explore the wonders of this amazing destination. Enjoy comfort, culture, and adventure all in one package.',
+            'destination_id' => $destination->id,
             'promotion_id' => Promotion::factory(),
             'partner_id' => Partner::factory(),
         ];

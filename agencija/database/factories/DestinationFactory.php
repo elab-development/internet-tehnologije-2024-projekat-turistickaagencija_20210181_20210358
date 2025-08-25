@@ -20,19 +20,34 @@ class DestinationFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+     public function definition(): array
     {
-        $model = Destination::class;
+        $destinations = [
+            ['name' => 'London',         'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/London%20Skyline.jpg?width=1600'], 
+            ['name' => 'Amsterdam',      'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Canal_in_Amsterdam.JPG?width=1600'],
+            ['name' => 'Dubai',          'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Dubai_Marina_Skyline_93.jpg?width=1600'],
+            ['name' => 'Sydney',         'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/SydneyOperaHouse.jpg?width=1600'],
+            ['name' => 'Kyoto',          'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto_Skyline.jpg?width=1600'],
+            ['name' => 'Rio de Janeiro', 'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Sunset_at_Rio_de_Janeiro_Skyline_%285328149427%29.jpg?width=1600'],
+            ['name' => 'Bali',           'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Beach_of_Bali_%2817703410942%29.jpg?width=1600'],
+            ['name' => 'Iguazu Falls',   'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Iguazu_Falls_%286038215352%29.jpg?width=1600'],
+            ['name' => 'Beograd',    'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Beograd%20Panorama%20%286645290383%29.jpg?width=1600'],
+            ['name' => 'Novi Sad',   'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Panorama%20of%20Novi%20Sad.jpg?width=1600'],
+            ['name' => 'Paris',      'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Skyline%20of%20Paris%20with%20the%20Eiffel%20Tower%202.jpg?width=1600'],
+            ['name' => 'Rome',       'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Colosseum%20in%20rome.jpg?width=1600'],
+            ['name' => 'Venice',     'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Grand%20Canal-Venice.jpg?width=1600'],
+            ['name' => 'Santorini',  'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Santorini_Oia.jpg?width=1600'],
+            ['name' => 'Tokyo',      'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Tokyo-skyline.jpg?width=1600'],
+            ['name' => 'Prague',     'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Prague_Skyline.jpg?width=1600'],
+            ['name' => 'Barcelona',  'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Barcelona_skyline_2007.jpg?width=1600'],
+            ['name' => 'Vienna',     'picture_link' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Vienna_Skyline.jpg?width=1600'],
+        ];
 
-        $destinationLinks= [
-            "https://www.travelandleisure.com/thmb/rbPz5_6COrWFh94qFRHYLJrRM-g=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/iguazu-falls-argentina-brazil-MOSTBEAUTIFUL0921-e967cc4764ca4eb2b9941bd1b48d64b5.jpg",
-            "https://media.cntravellerme.com/photos/647f5a66d49d9911e8a60ae4/master/pass/Plitvice-Lakes-Croatia-GettyImages-1080935866.jpg",
-            "https://static.tripzilla.in/media/125812/conversions/6c9544ff-608c-40fa-8fa9-61272093f736-w768.webp"
-            ];
+        $destination = $this->faker->randomElement($destinations);
 
         return [
-            'name' => $this->faker->city,
-            'picture_link' => $this->faker->randomElement($destinationLinks)
+            'name' => $destination['name'],
+            'picture_link' => $destination['picture_link']
         ];
     }
 }

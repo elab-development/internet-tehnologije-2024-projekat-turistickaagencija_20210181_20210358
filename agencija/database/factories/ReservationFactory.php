@@ -8,6 +8,7 @@ use App\Models\Promotion;
 use App\Models\Client;
 use App\Models\Reservation;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Carbon\Carbon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Reservation>
@@ -27,7 +28,8 @@ class ReservationFactory extends Factory
             'arrangement_id' => Arrangement::factory(),
             'client_id' => Client::factory(),
             'status' => $this->faker->randomElement(['pending', 'confirmed', 'canceled']),
-            'date' => $this->faker->date(),
+            'date' => Carbon::now()->format('Y-m-d'),
+            //'date' => $this->faker->date(),
         ];
     }
 }
